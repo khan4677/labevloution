@@ -1,36 +1,12 @@
 const table = document.querySelector("#studentTable tbody");
 let studentData = {};
 
-// ✅ Show toast
-function showToast(message, type = "success") {
-  const toast = document.getElementById("toast");
-  if (!toast) return;
-
-  toast.innerText = message;
-
-  if (type === "error") {
-    toast.style.backgroundColor = "#dc3545";
-    toast.style.color = "#fff";
-  } else if (type === "warning") {
-    toast.style.backgroundColor = "#ffc107";
-    toast.style.color = "#333";
-  } else {
-    toast.style.backgroundColor = "#28a745";
-    toast.style.color = "#fff";
-  }
-
-  toast.classList.add("show");
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2500);
-}
-
-// ✅ Save to localStorage
+// Save to localStorage
 function saveToStorage() {
   localStorage.setItem("students", JSON.stringify(studentData));
 }
 
-// ✅ Load from localStorage
+// Load from localStorage
 function loadFromStorage() {
   const stored = localStorage.getItem("students");
   if (stored) {
@@ -38,7 +14,7 @@ function loadFromStorage() {
   }
 }
 
-// ✅ Render table
+// Render the table
 function renderTable() {
   table.innerHTML = '';
   for (let id in studentData) {
@@ -51,53 +27,52 @@ function renderTable() {
   }
 }
 
-// ✅ Add student
+// Add student
 function addStudent() {
   const name = document.getElementById("name").value.trim();
   const id = document.getElementById("id").value.trim();
   const marks = document.getElementById("marks").value.trim();
 
   if (!name || !id || !marks) {
-    showToast("All fields are required.", "warning");
+    alert("All fields are required.");
     return;
   }
 
   if (!/^\d+$/.test(id)) {
-    showToast("ID must be a number only.", "warning");
+    alert("ID must be a number only.");
     return;
   }
 
   if (isNaN(marks) || marks < 0 || marks > 100) {
-    showToast("Marks must be 0–100.", "warning");
+    alert("Marks must be between 0 and 100.");
     return;
   }
 
   if (studentData[id]) {
-    showToast("ID already exists.", "error");
+    alert("This ID already exists.");
     return;
   }
 
   studentData[id] = { name, marks };
   saveToStorage();
   renderTable();
-  showToast("Student added!");
 
   document.getElementById("name").value = '';
   document.getElementById("id").value = '';
   document.getElementById("marks").value = '';
 }
 
-// ✅ Open popup
+// Open popup
 function openPopup() {
   const id = document.getElementById("modId").value.trim();
 
   if (!/^\d+$/.test(id)) {
-    showToast("ID must be a number only.", "warning");
+    alert("ID must be a number only.");
     return;
   }
 
   if (!studentData[id]) {
-    showToast("ID not found.", "error");
+    alert("ID not found.");
     return;
   }
 
@@ -106,36 +81,33 @@ function openPopup() {
   document.getElementById("popup").style.display = "block";
 }
 
-// ✅ Update student
+// Update student
 function updateStudent() {
   const id = document.getElementById("modId").value.trim();
   const newName = document.getElementById("popupName").value.trim();
   const newMarks = document.getElementById("popupMarks").value.trim();
 
   if (!newName || !newMarks) {
-    showToast("All fields are required.", "warning");
+    alert("All fields are required.");
     return;
   }
 
   if (isNaN(newMarks) || newMarks < 0 || newMarks > 100) {
-    showToast("Marks must be 0–100.", "warning");
+    alert("Marks must be between 0 and 100.");
     return;
   }
 
   studentData[id] = { name: newName, marks: newMarks };
   saveToStorage();
   renderTable();
-  showToast("Student updated!");
 
-  // ✅ Re-hide popup
+  // Close popup after update
   document.getElementById("popup").style.display = "none";
-
-  // ✅ Reset popup form so next time it's clean
   document.getElementById("popupName").value = '';
   document.getElementById("popupMarks").value = '';
 }
 
-// ✅ On page load
+// On load
 window.onload = function () {
   loadFromStorage();
   renderTable();
