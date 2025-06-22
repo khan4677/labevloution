@@ -106,7 +106,6 @@ function updateStudent() {
   document.getElementById("popupName").value = '';
   document.getElementById("popupMarks").value = '';
 }
-
 // On load
 window.onload = function () {
   loadFromStorage();
