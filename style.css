@@ -92,4 +92,6 @@ button:hover {
   padding: 25px;
   border-radius: 16px;
   border: 2px solid #007bff;
-  bo
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
