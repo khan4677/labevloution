@@ -1,10 +1,12 @@
 const table = document.querySelector("#studentTable tbody");
 let studentData = {};
 
+// Save data to localStorage
 function saveToStorage() {
   localStorage.setItem("students", JSON.stringify(studentData));
 }
 
+// Load data from localStorage
 function loadFromStorage() {
   const stored = localStorage.getItem("students");
   if (stored) {
@@ -12,6 +14,7 @@ function loadFromStorage() {
   }
 }
 
+// Render the table from studentData
 function renderTable() {
   table.innerHTML = '';
   for (let id in studentData) {
@@ -24,48 +27,72 @@ function renderTable() {
   }
 }
 
+// Add new student
 function addStudent() {
   const name = document.getElementById("name").value.trim();
   const id = document.getElementById("id").value.trim();
   const marks = document.getElementById("marks").value.trim();
 
-  if (!name || !id || !marks) return alert("All fields are required.");
-  if (studentData[id]) return alert("ID already exists.");
+  if (!name || !id || !marks) {
+    alert("All fields are required.");
+    return;
+  }
+
+  if (isNaN(marks) || marks < 0 || marks > 100) {
+    alert("Marks must be a number between 0 and 100.");
+    return;
+  }
+
+  if (studentData[id]) {
+    alert("ID already exists.");
+    return;
+  }
 
   studentData[id] = { name, marks };
   saveToStorage();
   renderTable();
 
-  // Clear input fields
   document.getElementById("name").value = '';
   document.getElementById("id").value = '';
   document.getElementById("marks").value = '';
 }
 
+// Open popup with student info
 function openPopup() {
   const id = document.getElementById("modId").value.trim();
-  if (!studentData[id]) return alert("ID not found.");
+  if (!studentData[id]) {
+    alert("ID not found.");
+    return;
+  }
 
   document.getElementById("popupName").value = studentData[id].name;
   document.getElementById("popupMarks").value = studentData[id].marks;
   document.getElementById("popup").style.display = "block";
 }
 
+// Update student data
 function updateStudent() {
   const id = document.getElementById("modId").value.trim();
   const newName = document.getElementById("popupName").value.trim();
   const newMarks = document.getElementById("popupMarks").value.trim();
 
-  if (!newName || !newMarks) return alert("All fields are required.");
+  if (!newName || !newMarks) {
+    alert("All fields are required.");
+    return;
+  }
+
+  if (isNaN(newMarks) || newMarks < 0 || newMarks > 100) {
+    alert("Marks must be a number between 0 and 100.");
+    return;
+  }
 
   studentData[id] = { name: newName, marks: newMarks };
   saveToStorage();
   renderTable();
-
   document.getElementById("popup").style.display = "none";
 }
 
-// Ensure data is restored and table is rendered on page load
+// Load everything when the page starts
 window.onload = function () {
   loadFromStorage();
   renderTable();
