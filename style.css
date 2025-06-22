@@ -1,18 +1,24 @@
+/* ========= Global Styles ========= */
 body {
-  font-family: Arial, sans-serif;
-  background: #f8f9fa;
-  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #e8f5e9);
+  margin: 0;
+  padding: 30px;
+  color: #333;
 }
 
+/* ========= Container ========= */
 .container {
-  max-width: 600px;
+  max-width: 800px;
   margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #ccc;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.6s ease-in-out;
 }
 
+/* ========= Table ========= */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -20,54 +26,113 @@ table {
 }
 
 th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
+  padding: 12px 15px;
   text-align: center;
+  border-bottom: 1px solid #ddd;
 }
 
 th {
-  background-color: #f0f0f0;
-}
-
-.form input {
-  margin: 5px 0;
-  width: 100%;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-}
-
-.form button {
-  margin-top: 10px;
-  padding: 10px;
-  width: 100%;
-  background-color: #28a745;
+  background-color: #007bff;
   color: white;
+}
+
+tr:nth-child(even) td {
+  background-color: #f2f2f2;
+}
+
+/* ========= Form Inputs ========= */
+.form input, #popup input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+/* ========= Buttons ========= */
+button {
+  padding: 12px;
+  width: 100%;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  background: #28a745;
   cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s;
 }
 
-.form button:hover {
-  background-color: #218838;
+button:hover {
+  background: #218838;
+  transform: scale(1.03);
 }
 
+.form button:nth-of-type(2) {
+  background-color: #ffc107;
+  color: black;
+}
+
+.form button:nth-of-type(2):hover {
+  background-color: #e0a800;
+}
+
+/* ========= Popup Edit Box ========= */
 #popup {
   display: none;
   position: fixed;
-  top: 30%;
+  top: 25%;
   left: 50%;
-  transform: translate(-50%, -30%);
-  background-color: #fff;
-  padding: 20px;
-  border: 2px solid #333;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  transform: translate(-50%, -25%);
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  border: 2px solid #007bff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeInPopup 0.4s ease-in-out;
 }
 
-#popup input, #popup button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
+/* ========= Toast Notification ========= */
+#toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  min-width: 250px;
+  padding: 15px 20px;
+  background-color: #333;
+  color: white;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 2000;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+#toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========= Animations ========= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInPopup {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
