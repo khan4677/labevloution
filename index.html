@@ -19,7 +19,27 @@
       </thead>
       <tbody></tbody>
     </table>
-    
+    <h3>Add Student</h3>
+    <div class="form">
+      <input type="text" id="name" placeholder="Name">
+      <input type="text" id="id" placeholder="ID">
+      <input type="text" id="marks" placeholder="Marks">
+      <button onclick="addStudent()">Add</button>
+    </div>
+
+    <h3>Modify Student</h3>
+    <div class="form">
+      <input type="text" id="modId" placeholder="Enter ID to Modify">
+      <button onclick="openPopup()">Modify</button>
+    </div>
+  </div>
+
+  <div id="popup">
+    <h3>Update Student</h3>
+    <input type="text" id="popupName" placeholder="New Name">
+    <input type="text" id="popupMarks" placeholder="New Marks">
+    <button onclick="updateStudent()">Update</button>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
